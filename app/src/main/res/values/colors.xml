@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--MD 字体颜色-->
+    <!--87% — D4  普通文字 -->
+    <color name="text_black_87">#D4000000</color>
+    <!--54% — 8A  减淡文字 -->
+    <color name="text_black_54">#8A000000</color>
+    <!--26% — 42  禁用状态/提示文字  -->
+    <color name="text_black_26">#42000000</color>
+    <!--12% — 1E  分隔线-->
+    <color name="text_black_12">#1E000000</color>
+
+    <!--100% —FF-->
+    <color name="text_white_100">#FFFFFFFF</color>
+    <!--70% — B3-->
+    <color name="text_white_70">#B3FFFFFF</color>
+    <!--30% — 4D-->
+    <color name="text_white_30">#4DFFFFFF</color>
+    <!--12% — 1E-->
+    <color name="text_white_12">#1EFFFFFF</color>
+
+
+    <!--背景颜色-->
+    <color name="background">#f2f4f5</color>
+    <color name="white">#ffffff</color>
+    <color name="green">#009688</color>
+    <color name="red">#EF5350</color>
+    <color name="orange">#FFA726</color>
+    <color name="gray">#BDBDBD</color>
+
+    <!--透明色-->
+    <color name="colorTransparent">#00000000</color>
+</resources>

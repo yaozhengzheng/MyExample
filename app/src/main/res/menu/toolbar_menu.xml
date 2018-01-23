@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ author：姚政诤
+  ~ description：
+  ~ GitHub：https://github.com/yaozhengzheng
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/publish"
+        android:icon="@mipmap/ic_launcher"
+        android:title="发布"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/login"
+        android:title="登录"
+        app:showAsAction="always"
+        />
+</menu>
