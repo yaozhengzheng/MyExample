@@ -19,6 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myexample.R;
+import com.example.myexample.event.Event;
+import com.example.myexample.event.EventBusUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -49,7 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         LayoutInflater.from(this).inflate(getContentView(), viewContent);
         init(savedInstanceState);
         loadData();
-
+        if (isRegisterEventBus()) {
+            EventBusUtil.register(this);
+        }
     }
 
     /**
@@ -116,5 +123,53 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
+    }
+
+    /**
+     * 是否注册事件分发
+     *
+     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
+     */
+    protected boolean isRegisterEventBus() {
+        return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventBusCome(Event event) {
+        if (event != null) {
+            receiveEvent(event);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onStickyEventBusCome(Event event) {
+        if (event != null) {
+            receiveStickyEvent(event);
+        }
+    }
+
+    /**
+     * 接收到分发到事件
+     *
+     * @param event 事件
+     */
+    protected void receiveEvent(Event event) {
+
+    }
+
+    /**
+     * 接受到分发的粘性事件
+     *
+     * @param event 粘性事件
+     */
+    protected void receiveStickyEvent(Event event) {
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isRegisterEventBus()) {
+            EventBusUtil.unregister(this);
+        }
     }
 }

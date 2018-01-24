@@ -2,12 +2,16 @@ package com.example.myexample;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myexample.base.BaseActivity;
+import com.example.myexample.bean.User;
+import com.example.myexample.event.C;
+import com.example.myexample.event.Event;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -76,4 +80,24 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        //接收到event后的处理逻辑
+        switch (event.getCode()) {
+            case C.EventCode.C:
+                Log.d("EventBus", "接收到B类型的Event，携带User");
+                User user = (User) event.getData();
+                Log.e("EventBus", user.getName());
+                break;
+            case C.EventCode.A:
+                Log.d("EventBus", "接收到A类型的Event");
+                break;
+        }
+    }
 }
