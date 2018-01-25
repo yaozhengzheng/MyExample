@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,19 +14,18 @@ import com.example.myexample.base.BaseActivity;
 import com.example.myexample.bean.User;
 import com.example.myexample.event.C;
 import com.example.myexample.event.Event;
-import com.example.myexample.ui.SecondActivity;
+import com.example.myexample.ui.activity.SecondActivity;
+import com.example.myexample.ui.fragment.TestFragment;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
-
-    @BindView(R.id.tv)
-    TextView tv;
 
     @Override
     protected int getContentView() {
@@ -101,9 +101,16 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
-    @OnClick(R.id.tv)
-    public void onViewClicked() {
-        startActivity(new Intent(MainActivity.this, SecondActivity.class));
+    @OnClick({R.id.tv, R.id.tv_frag})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv:
+                startActivity(new Intent(MainActivity.this, SecondActivity.class));
+                break;
+            case R.id.tv_frag:
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, TestFragment.class);
+                break;
+        }
     }
 }
