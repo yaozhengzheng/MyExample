@@ -7,25 +7,32 @@
 package com.example.myexample.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.myexample.R;
+import com.example.myexample.base.BaseActivity;
 import com.example.myexample.bean.User;
 import com.example.myexample.event.C;
 import com.example.myexample.event.Event;
 import com.example.myexample.event.EventBusUtil;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-        ButterKnife.bind(this);
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_second;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
+
     }
 
     @OnClick({R.id.btn_send, R.id.btn_sendModel})

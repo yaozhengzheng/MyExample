@@ -1,5 +1,6 @@
 package com.example.myexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,17 +13,18 @@ import com.example.myexample.base.BaseActivity;
 import com.example.myexample.bean.User;
 import com.example.myexample.event.C;
 import com.example.myexample.event.Event;
+import com.example.myexample.ui.SecondActivity;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
 
-    @Bind(R.id.tv)
+    @BindView(R.id.tv)
     TextView tv;
 
     @Override
@@ -35,8 +37,6 @@ public class MainActivity extends BaseActivity {
         setTitle("这是主页");
         hideBack(true);
         hideMenu(true);
-
-
     }
 
     /**
@@ -99,5 +99,11 @@ public class MainActivity extends BaseActivity {
                 Log.d("EventBus", "接收到A类型的Event");
                 break;
         }
+    }
+
+
+    @OnClick(R.id.tv)
+    public void onViewClicked() {
+        startActivity(new Intent(MainActivity.this, SecondActivity.class));
     }
 }

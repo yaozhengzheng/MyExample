@@ -25,6 +25,9 @@ import com.example.myexample.event.EventBusUtil;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -35,7 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     //标题
     private TextView toolBarTitle;
 
-
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isRegisterEventBus()) {
             EventBusUtil.register(this);
         }
+        //ButterKnife绑定需在setContentView之后
+        unbinder = ButterKnife.bind(this);
     }
+
 
     /**
      * 加载网络数据，初始化布局
@@ -165,9 +171,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void receiveStickyEvent(Event event) {
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unbinder.unbind();
         if (isRegisterEventBus()) {
             EventBusUtil.unregister(this);
         }
