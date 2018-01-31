@@ -16,11 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.myexample.R;
 import com.example.myexample.event.Event;
 import com.example.myexample.event.EventBusUtil;
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -40,6 +42,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private Unbinder unbinder;
 
+    protected LoadService loadService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +59,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //设置framelayout中的布局
         LayoutInflater.from(this).inflate(getContentView(), viewContent);
+
         init(savedInstanceState);
+        empty(true);
         loadData();
+        initNet();
         if (isRegisterEventBus()) {
             EventBusUtil.register(this);
         }
@@ -74,6 +81,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void init(Bundle savedInstanceState);
 
+    protected abstract void initNet();
+
+    protected abstract void onNetReload(View v);
 
     /**
      * 设置title
@@ -98,11 +108,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(BaseActivity.this, "返回", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
                 }
             });
         }
 
+    }
+
+    /**
+     * 返回按钮实现逻辑，可以加入动画等
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     /**
@@ -178,6 +196,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         unbinder.unbind();
         if (isRegisterEventBus()) {
             EventBusUtil.unregister(this);
+        }
+    }
+
+
+    public void empty(Boolean b) {
+        if (b) {
+            loadService = LoadSir.getDefault().register(this, new Callback.OnReloadListener() {
+                @Override
+                public void onReload(View v) {
+                    onNetReload(v);
+                }
+            });
         }
     }
 }

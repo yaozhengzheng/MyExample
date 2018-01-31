@@ -35,6 +35,18 @@ public class SecondActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setTitle("EventBus");
+        hideBack(true);
+        hideMenu(false);
+    }
+
+    @Override
+    protected void initNet() {
+
+    }
+
+    @Override
+    protected void onNetReload(View v) {
 
     }
 

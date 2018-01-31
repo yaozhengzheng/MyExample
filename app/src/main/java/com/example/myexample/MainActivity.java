@@ -11,13 +11,12 @@ import android.widget.Toast;
 
 import com.example.myexample.base.BaseActivity;
 import com.example.myexample.bean.User;
+import com.example.myexample.callback.LoadingCallback;
 import com.example.myexample.event.C;
 import com.example.myexample.event.Event;
+import com.example.myexample.ui.activity.EmptyActivity;
 import com.example.myexample.ui.activity.SecondActivity;
-import com.example.myexample.ui.fragment.TestFragment;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
+import com.example.myexample.utils.PostUtil;
 
 import butterknife.OnClick;
 
@@ -32,8 +31,18 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         setTitle("这是主页");
-        hideBack(true);
+        hideBack(false);
         hideMenu(true);
+        empty(false);
+    }
+
+    @Override
+    protected void initNet() {
+
+    }
+
+    @Override
+    protected void onNetReload(View v) {
     }
 
     /**
@@ -60,21 +69,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        OkGo.<String>post("http://192.168.0.162:8080/cts-web/login")
-                .tag(this)
-                .params("username", "15628767100")
-                .params("password", "abc123")
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Toast.makeText(MainActivity.this, "请求成功！", Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                    }
-                });
     }
 
 
@@ -105,8 +100,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(MainActivity.this, SecondActivity.class));
                 break;
             case R.id.tv_frag:
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, TestFragment.class);
+                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
                 break;
         }
     }
